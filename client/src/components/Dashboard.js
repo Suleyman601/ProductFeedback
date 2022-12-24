@@ -11,11 +11,11 @@ const Dashboard = () => {
     setShow(!show);
   };
   return (
-    <div className="md:grid md:grid-cols-3 md:gap-2.5 lg:grid-cols-1 lg:gap-x-0">
+    <div className="md:grid md:grid-cols-3 md:gap-2.5 lg:grid-cols-1 lg:gap-x-0 lg:flex lg:flex-col">
       {show && (
         <div className="fixed h-[90vh] transition duration-[0.7s] ease-in-out w-screen bg-overlay  z-[100] md:hidden"></div>
       )}
-      <div className=" bg-gradientMobile md:bg-gradientTablet lg:bg-gradientDesktop bg-cover text-white px-6 py-2 flex justify-between items-center w-full fixed z-[100] md:static md:col-span-1 md:items-end md:pb-6 md:rounded-xl ">
+      <div className=" bg-gradientMobile md:bg-gradientTablet lg:bg-gradientDesktop bg-cover text-white px-6 py-2 flex justify-between items-center w-full fixed z-[100] md:static md:col-span-1 md:items-end md:pb-6 md:rounded-xl lg:h-[186.5px]">
         <div>
           <p className="font-bold">Frontend Mentor</p>
           <p className="text-sm">Feedback Board</p>

@@ -1,4 +1,5 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
+import axios from "axios";
 import suggestionsImg from "../assets/suggestions/icon-suggestions.svg";
 import emptyImg from "../assets/suggestions/illustration-empty.svg";
 import plusIcon from "../assets/shared/icon-plus.svg";
@@ -6,16 +7,26 @@ import Dashboard from "../components/Dashboard";
 import Dropdown from "../components/Dropdown";
 import Feedback from "../components/Feedback";
 import { Link } from "react-router-dom";
+
+const BaseURL = "http://localhost:5000/feedbacks";
+
 const Home = () => {
   const [active, setActive] = useState(false);
   const [select, setselect] = useState("Most Upvotes");
+  const [feedbackData, setfeedbackData] = useState([]);
+
+  useEffect(() => {
+    axios.get(BaseURL).then((res) => {
+      setfeedbackData(res.data);
+    });
+  }, []);
 
   const selectChange = (e) => {
     setselect(e.currentTarget.firstChild.innerHTML);
     setActive(!active);
   };
 
-  let feedbackTotal = 0;
+  let feedbackTotal = feedbackData.length;
   return (
     <div className="flex flex-col">
       <div className="md:px-9 md:py-14 max-w-[1110px] lg:grid lg:grid-cols-4 lg:mx-auto gap-[30px] h-full">
@@ -72,29 +83,18 @@ const Home = () => {
             </div>
           ) : (
             <div className="px-6 pt-8 pb-14 flex flex-col gap-4 md:px-0 lg:col-start-2 lg:col-span-4 lg:self-start">
-              <Feedback
-                title="Add tags for solutions"
-                description="Easier to search for solutions based on a specific stack"
-                tag="Enhancement"
-                upvotes="112"
-                comments="2"
-              />
-
-              <Feedback
-                title="Add tags for solutions"
-                description="Easier to search for solutions based on a specific stack"
-                tag="Enhancement"
-                upvotes="112"
-                comments="2"
-              />
-
-              <Feedback
-                title="Add tags for solutions"
-                description="Easier to search for solutions based on a specific stack"
-                tag="Enhancement"
-                upvotes="112"
-                comments="2"
-              />
+              {feedbackData.map((feedback, index) => {
+                return (
+                  <Feedback
+                    title={feedback.title}
+                    description={feedback.details}
+                    tag={feedback.category}
+                    upvotes="112"
+                    comments="2"
+                    key={index}
+                  />
+                );
+              })}
             </div>
           )}
         </div>
